@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useContext } from "react";
+import { useRef, useState, useCallback } from "react";
 import ReactFlow, {
 	Background,
 	Controls,
@@ -8,14 +8,18 @@ import ReactFlow, {
 	BackgroundVariant,
 	ReactFlowInstance,
 	ConnectionMode,
+	Edge,
+	useNodesState,
+	useEdgesState,
 } from "reactflow";
 
 import type { Node, OnConnect, DefaultEdgeOptions, NodeTypes } from "reactflow";
 
 import "reactflow/dist/style.css";
 import EntityNode from "./nodes/entity-node";
-import { NodeDialogContext } from "./providers/node-dialog-provider";
-import { DiagramViewContext } from "./providers/diagram-view-provider";
+
+const initialNodes: Node[] = [];
+const initialEdges: Edge[] = [];
 
 const defaultEdgeOptions: DefaultEdgeOptions = {
 	animated: true,
@@ -30,8 +34,8 @@ let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 function DiagramView() {
-	const { nodes, setNodes, onNodesChange, edges, setEdges, onEdgesChange } =
-		useContext(DiagramViewContext);
+	const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(initialNodes);
+	const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
 
 	const reactFlowWrapper = useRef<HTMLDivElement>(null);
 	const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
@@ -40,8 +44,6 @@ function DiagramView() {
 		(connection) => setEdges((eds) => addEdge(connection, eds)),
 		[setEdges]
 	);
-
-	const { openNodeDialog } = useContext(NodeDialogContext);
 
 	const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
 		event.preventDefault();
@@ -97,9 +99,6 @@ function DiagramView() {
 				nodeTypes={nodeTypes}
 				defaultEdgeOptions={defaultEdgeOptions}
 				connectionMode={ConnectionMode.Loose}
-				onNodeClick={(_, node) => {
-					openNodeDialog(node);
-				}}
 				fitView
 			>
 				<Controls />

@@ -9,7 +9,7 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { Node } from "reactflow";
+import { Node, useReactFlow } from "reactflow";
 import { Textarea } from "./ui/textarea";
 import { useEffect, useState } from "react";
 
@@ -21,28 +21,41 @@ type NodeDialogProps = {
 
 function NodeDialog({ open, setOpen, node }: NodeDialogProps) {
 
+	const reactFlowInstance = useReactFlow();
+
 	const [formData, setFormData] = useState({
 		title: "",
-		attributes: ""
-	})
+		attributes: "",
+	});
 
 	useEffect(() => {
-		if(node === null) return;
+		if (node === null) return;
 
 		setFormData({
 			title: node.data.title,
-			attributes: node.data.attributes.join("\n")
-		})
-	}, [node])
+			attributes: node.data.attributes.join("\n"),
+		});
+	}, [node]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-		setFormData(data => ({
+		setFormData((data) => ({
 			...data,
-			[e.target.id]: e.target.value
-		}))
-	}
-	
+			[e.target.id]: e.target.value,
+		}));
+	};
+
 	const updateNode = () => {
+		if (node === null) return;
+		reactFlowInstance.setNodes(nds => nds.map(n => {
+			if(node.id === n.id) {
+				n.data = {
+					title: formData.title,
+					attributes: formData.attributes.split("\n")
+				}
+			}
+
+			return n;
+		}));
 		setOpen(false);
 	};
 
