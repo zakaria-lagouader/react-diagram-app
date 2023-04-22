@@ -9,6 +9,8 @@ import ReactFlow, {
 	useEdgesState,
 	useNodesState,
 	BackgroundVariant,
+	ReactFlowInstance,
+	ConnectionMode,
 } from "reactflow";
 
 import type { Edge, Node, OnConnect, DefaultEdgeOptions, NodeTypes } from "reactflow";
@@ -16,18 +18,9 @@ import type { Edge, Node, OnConnect, DefaultEdgeOptions, NodeTypes } from "react
 import "reactflow/dist/style.css";
 import EntityNode from "./nodes/entity-node";
 
-const initialNodes: Node[] = [
-	{ id: "1", data: { label: "Node 1" }, position: { x: 5, y: 5 } },
-	{ id: "2", data: { label: "Node 2" }, position: { x: 5, y: 100 } },
-	{
-		id: "3",
-		data: { title: "Car", attributes: ["color: red", "price: 1MD"] },
-		position: { x: 5, y: 300 },
-		type: "entity",
-	},
-];
+const initialNodes: Node[] = [];
 
-const initialEdges: Edge[] = [{ id: "e1-2", source: "1", target: "2" }];
+const initialEdges: Edge[] = [];
 
 const defaultEdgeOptions: DefaultEdgeOptions = {
 	animated: true,
@@ -38,16 +31,55 @@ const nodeTypes: NodeTypes = {
 	entity: EntityNode,
 };
 
+let id = 0;
+const getId = () => `dndnode_${id++}`;
+
 function DiagramView() {
 	const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(initialNodes);
 	const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
 
-	const reactFlowWrapper = useRef(null);
-	// const [reactFlowInstance, setReactFlowInstance] = useState(null);
+	const reactFlowWrapper = useRef<HTMLDivElement>(null);
+	const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
 
 	const onConnect: OnConnect = useCallback(
 		(connection) => setEdges((eds) => addEdge(connection, eds)),
 		[setEdges]
+	);
+
+	const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
+		event.preventDefault();
+		event.dataTransfer.dropEffect = "move";
+	}, []);
+
+	const onDrop = useCallback(
+		(event: React.DragEvent<HTMLDivElement>) => {
+			event.preventDefault();
+
+			if (reactFlowWrapper.current === null || reactFlowInstance === null) return;
+
+			const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+			const type = event.dataTransfer.getData("application/reactflow");
+
+			// check if the dropped element is valid
+			if (typeof type === "undefined" || !type) {
+				return;
+			}
+
+			const position = reactFlowInstance.project({
+				x: event.clientX - reactFlowBounds.left,
+				y: event.clientY - reactFlowBounds.top,
+			});
+
+			const newNode: Node = {
+				id: getId(),
+				type,
+				position,
+				data: { title: "test", attributes: [], label: "test" },
+			};
+
+			setNodes((nds) => nds.concat(newNode));
+		},
+		[reactFlowInstance]
 	);
 
 	return (
@@ -59,8 +91,12 @@ function DiagramView() {
 					onNodesChange={onNodesChange}
 					onEdgesChange={onEdgesChange}
 					onConnect={onConnect}
+					onInit={setReactFlowInstance}
+					onDrop={onDrop}
+					onDragOver={onDragOver}
 					nodeTypes={nodeTypes}
 					defaultEdgeOptions={defaultEdgeOptions}
+					connectionMode={ConnectionMode.Loose}
 					fitView
 				>
 					<Controls />
