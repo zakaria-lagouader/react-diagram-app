@@ -1,6 +1,7 @@
 import { useReactFlow } from "reactflow";
 import type { NodeProps } from "reactflow";
 import BaseNode from "./base-node";
+import { memo } from "react";
 
 export type NodeData = {
 	title: string;
@@ -32,4 +33,4 @@ function EntityNode({ data, id }: NodeProps<NodeData>) {
 	);
 }
 
-export default EntityNode;
+export default memo(EntityNode);

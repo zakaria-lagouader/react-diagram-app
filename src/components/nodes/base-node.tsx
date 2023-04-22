@@ -5,7 +5,7 @@ import {
 	ContextMenuItem,
 	ContextMenuTrigger,
 } from "../ui/context-menu";
-import { useCallback, useContext } from "react";
+import { memo, useCallback, useContext } from "react";
 import { NodeDialogContext } from "../providers/node-dialog-provider";
 
 type BaseNodeProps = {
@@ -48,4 +48,4 @@ function BaseNode({ children, node }: BaseNodeProps) {
 	);
 }
 
-export default BaseNode;
+export default memo(BaseNode);

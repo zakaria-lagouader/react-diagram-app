@@ -1,6 +1,7 @@
-import React, { createContext, useState } from "react";
-import NodeDialog from "../node-dialog";
+import React, { createContext, memo, useMemo, useState } from "react";
 import { Node } from "reactflow";
+import BoxNodeDialog from "../dialogs/box-node-dialog";
+import EntityNodeDialog from "../dialogs/entity-node-dialog";
 
 type NodeDialogProviderProps = {
 	children: React.ReactNode;
@@ -11,13 +12,20 @@ type NodeDialogContextProps = {
 	closeNodeDialog: () => void
 };
 
-
-
 export const NodeDialogContext = createContext<NodeDialogContextProps>({} as NodeDialogContextProps);
+
+const Dialogs = {
+	entity: EntityNodeDialog,
+	box: BoxNodeDialog
+}
+
+const Empty = (props: any) => <></>
 
 function NodeDialogProvider({ children }: NodeDialogProviderProps) {
 	const [open, setOpen] = useState(false);
 	const [node, setNode] = useState<Node | null>(null);
+
+	const NodeDialogByType = node !== null ? Dialogs[node.type as keyof typeof Dialogs]: Empty
 
     const openNodeDialog = (node: Node) => {
         setNode(node)
@@ -32,7 +40,7 @@ function NodeDialogProvider({ children }: NodeDialogProviderProps) {
 	return (
 		<NodeDialogContext.Provider value={{ openNodeDialog, closeNodeDialog }}>
 			{children}
-			<NodeDialog open={open} setOpen={setOpen} node={node} />
+			<NodeDialogByType open={open} setOpen={setOpen} node={node} />
 		</NodeDialogContext.Provider>
 	);
 }
