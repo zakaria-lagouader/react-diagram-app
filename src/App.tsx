@@ -1,8 +1,11 @@
+import Sidebar from "./components/Sidebar"
+import DiagramView from "./components/diagram-view"
 
 function App() {
   return (
-    <div>
-      <h1 className="font-bold text-3xl">Hello World</h1>
+    <div className="w-screen h-screen overflow-hidden flex">
+		<DiagramView />
+		<Sidebar />
     </div>
   )
 }
