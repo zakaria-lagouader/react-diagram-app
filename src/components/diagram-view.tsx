@@ -1,10 +1,9 @@
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useContext } from "react";
 import ReactFlow, {
 	Background,
 	Controls,
 	MarkerType,
 	MiniMap,
-	ReactFlowProvider,
 	addEdge,
 	useEdgesState,
 	useNodesState,
@@ -17,6 +16,7 @@ import type { Edge, Node, OnConnect, DefaultEdgeOptions, NodeTypes } from "react
 
 import "reactflow/dist/style.css";
 import EntityNode from "./nodes/entity-node";
+import { NodeDialogContext } from "./node-dialog-provider";
 
 const initialNodes: Node[] = [];
 
@@ -46,6 +46,8 @@ function DiagramView() {
 		[setEdges]
 	);
 
+	const { openNodeDialog } = useContext(NodeDialogContext);
+
 	const onDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
 		event.preventDefault();
 		event.dataTransfer.dropEffect = "move";
@@ -74,7 +76,11 @@ function DiagramView() {
 				id: getId(),
 				type,
 				position,
-				data: { title: "test", attributes: [], label: "test" },
+				data: {
+					title: "Entity",
+					attributes: ["attr1: value 1", "attr2: value 2"],
+					label: "test",
+				},
 			};
 
 			setNodes((nds) => nds.concat(newNode));
@@ -83,28 +89,29 @@ function DiagramView() {
 	);
 
 	return (
-		<ReactFlowProvider>
-			<div className="flex-1 h-full" ref={reactFlowWrapper}>
-				<ReactFlow
-					nodes={nodes}
-					edges={edges}
-					onNodesChange={onNodesChange}
-					onEdgesChange={onEdgesChange}
-					onConnect={onConnect}
-					onInit={setReactFlowInstance}
-					onDrop={onDrop}
-					onDragOver={onDragOver}
-					nodeTypes={nodeTypes}
-					defaultEdgeOptions={defaultEdgeOptions}
-					connectionMode={ConnectionMode.Loose}
-					fitView
-				>
-					<Controls />
-					<MiniMap />
-					<Background variant={BackgroundVariant.Dots} gap={12} size={1} />
-				</ReactFlow>
-			</div>
-		</ReactFlowProvider>
+		<div className="flex-1 h-full" ref={reactFlowWrapper}>
+			<ReactFlow
+				nodes={nodes}
+				edges={edges}
+				onNodesChange={onNodesChange}
+				onEdgesChange={onEdgesChange}
+				onConnect={onConnect}
+				onInit={setReactFlowInstance}
+				onDrop={onDrop}
+				onDragOver={onDragOver}
+				nodeTypes={nodeTypes}
+				defaultEdgeOptions={defaultEdgeOptions}
+				connectionMode={ConnectionMode.Loose}
+				onNodeClick={(_, node) => {
+					openNodeDialog(node);
+				}}
+				fitView
+			>
+				<Controls />
+				<MiniMap />
+				<Background variant={BackgroundVariant.Dots} gap={12} size={1} />
+			</ReactFlow>
+		</div>
 	);
 }
 

@@ -1,7 +1,7 @@
 import { Handle, Position } from "reactflow"
 import type { NodeProps } from "reactflow"
 
-type NodeData = {
+export type NodeData = {
     title: string;
     attributes: string[]
 }

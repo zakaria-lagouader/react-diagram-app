@@ -1,4 +1,5 @@
 import { cn } from "../lib/utils";
+import NodeDialog from "./node-dialog";
 import { ScrollArea } from "./ui/scroll-area";
 
 type ComponentProp = {
