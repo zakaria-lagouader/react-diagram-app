@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import NodeDialog from "./node-dialog";
+import NodeDialog from "../node-dialog";
 import { Node } from "reactflow";
 
 type NodeDialogProviderProps = {

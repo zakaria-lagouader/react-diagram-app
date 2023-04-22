@@ -5,22 +5,17 @@ import ReactFlow, {
 	MarkerType,
 	MiniMap,
 	addEdge,
-	useEdgesState,
-	useNodesState,
 	BackgroundVariant,
 	ReactFlowInstance,
 	ConnectionMode,
 } from "reactflow";
 
-import type { Edge, Node, OnConnect, DefaultEdgeOptions, NodeTypes } from "reactflow";
+import type { Node, OnConnect, DefaultEdgeOptions, NodeTypes } from "reactflow";
 
 import "reactflow/dist/style.css";
 import EntityNode from "./nodes/entity-node";
-import { NodeDialogContext } from "./node-dialog-provider";
-
-const initialNodes: Node[] = [];
-
-const initialEdges: Edge[] = [];
+import { NodeDialogContext } from "./providers/node-dialog-provider";
+import { DiagramViewContext } from "./providers/diagram-view-provider";
 
 const defaultEdgeOptions: DefaultEdgeOptions = {
 	animated: true,
@@ -35,8 +30,8 @@ let id = 0;
 const getId = () => `dndnode_${id++}`;
 
 function DiagramView() {
-	const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(initialNodes);
-	const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
+	const { nodes, setNodes, onNodesChange, edges, setEdges, onEdgesChange } =
+		useContext(DiagramViewContext);
 
 	const reactFlowWrapper = useRef<HTMLDivElement>(null);
 	const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
