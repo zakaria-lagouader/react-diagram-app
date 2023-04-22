@@ -30,7 +30,6 @@ function NodeDialog({ open, setOpen, node }: NodeDialogProps) {
 
 	useEffect(() => {
 		if (node === null) return;
-
 		setFormData({
 			title: node.data.title,
 			attributes: node.data.attributes.join("\n"),

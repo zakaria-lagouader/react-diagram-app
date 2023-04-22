@@ -1,5 +1,4 @@
 import { cn } from "../lib/utils";
-import NodeDialog from "./node-dialog";
 import { ScrollArea } from "./ui/scroll-area";
 
 type ComponentProp = {
@@ -37,7 +36,7 @@ function Sidebar() {
 
 			<div className="w-full mt-8 space-y-4">
 				<Component text="Entity" color="bg-green-400" type="entity" />
-				<Component text="Input" color="bg-blue-400" type="input" />
+				<Component text="Box" color="bg-blue-400" type="box" />
 				<Component text="Output" color="bg-pink-400" type="output" />
 				<Component text="Default" color="bg-red-400" type="default" />
 			</div>

@@ -6,20 +6,24 @@ import ReactFlow, {
 	MiniMap,
 	addEdge,
 	BackgroundVariant,
-	ReactFlowInstance,
 	ConnectionMode,
-	Edge,
 	useNodesState,
 	useEdgesState,
 } from "reactflow";
 
-import type { Node, OnConnect, DefaultEdgeOptions, NodeTypes } from "reactflow";
+import type {
+	Node,
+	Edge,
+	OnConnect,
+	DefaultEdgeOptions,
+	NodeTypes,
+	ReactFlowInstance,
+	XYPosition,
+} from "reactflow";
 
 import "reactflow/dist/style.css";
 import EntityNode from "./nodes/entity-node";
-
-const initialNodes: Node[] = [];
-const initialEdges: Edge[] = [];
+import BoxNode from "./nodes/box-node";
 
 const defaultEdgeOptions: DefaultEdgeOptions = {
 	animated: true,
@@ -28,14 +32,30 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 
 const nodeTypes: NodeTypes = {
 	entity: EntityNode,
+	box: BoxNode,
 };
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
+const dataByType = {
+	entity: {
+		title: "Entity",
+		attributes: ["attr1: value 1", "attr2: value 2"],
+	},
+	box: {
+		title: "Box Node",
+	},
+};
+const getNodeByType = (type: string, position: XYPosition): Node => ({
+	id: getId(),
+	type,
+	position,
+	data: dataByType[type as keyof typeof dataByType],
+});
 
 function DiagramView() {
-	const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(initialNodes);
-	const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
+	const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>([]);
+	const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>([]);
 
 	const reactFlowWrapper = useRef<HTMLDivElement>(null);
 	const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
@@ -69,16 +89,7 @@ function DiagramView() {
 				y: event.clientY - reactFlowBounds.top,
 			});
 
-			const newNode: Node = {
-				id: getId(),
-				type,
-				position,
-				data: {
-					title: "Entity",
-					attributes: ["attr1: value 1", "attr2: value 2"],
-					label: "test",
-				},
-			};
+			const newNode = getNodeByType(type, position)
 
 			setNodes((nds) => nds.concat(newNode));
 		},

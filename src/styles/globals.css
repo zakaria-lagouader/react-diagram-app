@@ -81,3 +81,7 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
+
+.react-flow__node.selected {
+  filter: drop-shadow(rgba(0, 0, 0, 0.2) 2px 4px 6px);
+}
