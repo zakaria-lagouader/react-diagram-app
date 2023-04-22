@@ -1,7 +1,6 @@
 import React, { createContext, useState } from "react";
 import NodeDialog from "./node-dialog";
 import { Node } from "reactflow";
-import { NodeData } from "./nodes/entity-node";
 
 type NodeDialogProviderProps = {
 	children: React.ReactNode;
@@ -18,22 +17,22 @@ export const NodeDialogContext = createContext<NodeDialogContextProps>({} as Nod
 
 function NodeDialogProvider({ children }: NodeDialogProviderProps) {
 	const [open, setOpen] = useState(false);
-	const [nodeData, setNodeData] = useState<NodeData | null>(null);
+	const [node, setNode] = useState<Node | null>(null);
 
     const openNodeDialog = (node: Node) => {
-        setNodeData(node.data)
+        setNode(node)
         setOpen(true);
     }
 
     const closeNodeDialog = () => {
-        setNodeData(null)
+        setNode(null)
         setOpen(false);
     }
     
 	return (
 		<NodeDialogContext.Provider value={{ openNodeDialog, closeNodeDialog }}>
 			{children}
-			<NodeDialog open={open} setOpen={setOpen} nodeData={nodeData} />
+			<NodeDialog open={open} setOpen={setOpen} node={node} />
 		</NodeDialogContext.Provider>
 	);
 }

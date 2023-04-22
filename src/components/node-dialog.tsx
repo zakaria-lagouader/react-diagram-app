@@ -1,9 +1,7 @@
-import { useState } from "react"
 import { Button } from "./ui/button";
 import {
 	Dialog,
 	DialogContent,
-	DialogTrigger,
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
@@ -11,18 +9,46 @@ import {
 } from "./ui/dialog";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { NodeData } from "./nodes/entity-node";
+import { Node } from "reactflow";
+import { Textarea } from "./ui/textarea";
+import { useEffect, useState } from "react";
 
 type NodeDialogProps = {
 	open: boolean;
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	nodeData: NodeData | null;
-}
+	node: Node | null;
+};
 
-function NodeDialog({ open, setOpen, nodeData }: NodeDialogProps) {
+function NodeDialog({ open, setOpen, node }: NodeDialogProps) {
+
+	const [formData, setFormData] = useState({
+		title: "",
+		attributes: ""
+	})
+
+	useEffect(() => {
+		if(node === null) return;
+
+		setFormData({
+			title: node.data.title,
+			attributes: node.data.attributes.join("\n")
+		})
+	}, [node])
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+		setFormData(data => ({
+			...data,
+			[e.target.id]: e.target.value
+		}))
+	}
+	
+	const updateNode = () => {
+		setOpen(false);
+	};
+
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogContent className="sm:max-w-[425px]">
+			<DialogContent className="sm:max-w-[480px]">
 				<DialogHeader>
 					<DialogTitle>Edit Entity</DialogTitle>
 					<DialogDescription>
@@ -34,17 +60,29 @@ function NodeDialog({ open, setOpen, nodeData }: NodeDialogProps) {
 						<Label htmlFor="title" className="text-right">
 							Title
 						</Label>
-						<Input id="title" defaultValue={nodeData?.title} className="col-span-3" />
+						<Input
+							id="title"
+							value={formData.title}
+							onChange={handleChange}
+							className="col-span-3"
+						/>
 					</div>
 					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="username" className="text-right">
+						<Label htmlFor="attributes" className="text-right">
 							Attributes
 						</Label>
-						<Input id="username" defaultValue="@peduarte" className="col-span-3" />
+						<Textarea
+							id="attributes"
+							value={formData.attributes}
+							onChange={handleChange}
+							className="col-span-3"
+						/>
 					</div>
 				</div>
 				<DialogFooter>
-					<Button type="button" onClick={() => setOpen(false)}>Save changes</Button>
+					<Button type="button" onClick={updateNode}>
+						Save changes
+					</Button>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
