@@ -27,6 +27,7 @@ import ProductionControlNode from "./nodes/production-control-node";
 import CustomerSupplierNode from "./nodes/customer-supplier-node";
 import ExternalShipmentNode from "./nodes/external-shipment-node";
 import InventoryNode from "./nodes/inventory-node";
+import DownloadButton from "./download-button";
 
 const defaultEdgeOptions: DefaultEdgeOptions = {
 	animated: true,
@@ -112,7 +113,8 @@ function DiagramView() {
 	);
 
 	return (
-		<div className="flex-1 h-full" ref={reactFlowWrapper}>
+		<div className="flex-1 h-full relative" ref={reactFlowWrapper} >
+			<DownloadButton />
 			<ReactFlow
 				nodes={nodes}
 				edges={edges}
