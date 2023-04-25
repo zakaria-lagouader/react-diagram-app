@@ -12,7 +12,7 @@ function ProductionControlNode({ data, id }: NodeProps<NodeData>) {
 	const node = reactFlowInstance.getNode(id)!;
 
 	return (
-		<BaseNode node={node}>
+		<BaseNode node={node} right left>
 			<div className="bg-white border border-black w-[10rem]">
 				<div className="text-center text-sm font-semibold px-2 py-1 border-b border-b-black bg-[#e9eff7]">
 					{data.title}

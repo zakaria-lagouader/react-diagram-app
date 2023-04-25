@@ -14,7 +14,7 @@ function CustomerSupplierNode({ data, id }: NodeProps<NodeData>) {
 	const node = reactFlowInstance.getNode(id)!;
 
 	return (
-		<BaseNode node={node}>
+		<BaseNode node={node} left bottom right>
 			<div className="w-[10rem] relative">
                 <img src={CustomerSupplierNodeIcon} alt="CustomerSupplierNodeIcon" className="block w-[10rem] h-auto" />
 				<div className="text-center text-sm font-semibold absolute inset-0 flex items-center justify-center mt-6">
