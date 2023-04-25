@@ -38,6 +38,7 @@ function Sidebar() {
 				<Component text="Process" color="bg-green-400" type="process" />
 				<Component text="Box" color="bg-blue-400" type="box" />
 				<Component text="Customer/Supplier" color="bg-red-400" type="customer-supplier" />
+				<Component text="External Shipment" color="bg-yellow-400" type="external-shipment" />
 			</div>
 		</ScrollArea>
 	);

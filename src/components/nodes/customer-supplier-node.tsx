@@ -9,7 +9,7 @@ export type NodeData = {
     type: "customer" | "supplier"
 };
 
-function CustomerSupplierNode({ data, type, id }: NodeProps<NodeData>) {
+function CustomerSupplierNode({ data, id }: NodeProps<NodeData>) {
 	const reactFlowInstance = useReactFlow();
 	const node = reactFlowInstance.getNode(id)!;
 
