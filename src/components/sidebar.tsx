@@ -36,9 +36,10 @@ function Sidebar() {
 
 			<div className="w-full mt-8 grid grid-cols-2 gap-4">
 				<Component text="Process" color="bg-green-400" type="process" />
-				<Component text="Box" color="bg-blue-400" type="box" />
+				<Component text="Production Control" color="bg-blue-400" type="production-control" />
 				<Component text="Customer/Supplier" color="bg-red-400" type="customer-supplier" />
 				<Component text="External Shipment" color="bg-yellow-400" type="external-shipment" />
+				<Component text="Inventory" color="bg-gray-400" type="inventory" />
 			</div>
 		</ScrollArea>
 	);

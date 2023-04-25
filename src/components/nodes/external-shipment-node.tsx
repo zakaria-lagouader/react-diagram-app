@@ -14,8 +14,8 @@ function ExternalShipmentNode({ data, id }: NodeProps<NodeData>) {
 
 	return (
 		<BaseNode node={node}>
-			<div className="w-[10rem]">
-                <img src={ExternalShipmentNodeIcon} alt="ExternalShipmentNodeIcon" className="block w-[10rem] h-auto" />
+			<div className="w-[8rem]">
+                <img src={ExternalShipmentNodeIcon} alt="ExternalShipmentNodeIcon" className="block w-[8rem] h-auto" />
 				<div className="text-center text-sm font-semibold mb-2">
 					{data.title}
 				</div>

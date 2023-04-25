@@ -1,7 +1,10 @@
 import React, { createContext, useState } from "react";
 import { Node } from "reactflow";
-import BoxNodeDialog from "../dialogs/box-node-dialog";
+import ProductionControlNodeDialog from "../dialogs/production-control-node-dialog";
 import ProcessNodeDialog from "../dialogs/process-node-dialog";
+import InventoryNodeDialog from "../dialogs/inventory-node-dialog";
+import ExternalShipmentNodeDialog from "../dialogs/external-shipment-dialog";
+import CustomerSupplierNodeDialog from "../dialogs/customer-supplier-dialog";
 
 type NodeDialogProviderProps = {
 	children: React.ReactNode;
@@ -16,7 +19,10 @@ export const NodeDialogContext = createContext<NodeDialogContextProps>({} as Nod
 
 const Dialogs = {
 	process: ProcessNodeDialog,
-	box: BoxNodeDialog
+	"production-control": ProductionControlNodeDialog,
+	"inventory": InventoryNodeDialog,
+	"external-shipment": ExternalShipmentNodeDialog,
+	"customer-supplier": CustomerSupplierNodeDialog,
 }
 
 const Empty = (_: any) => <></>

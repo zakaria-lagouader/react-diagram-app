@@ -5,7 +5,7 @@ import BaseDialog, { NodeDialogProps } from "./base-dialog";
 import { isEmpty } from "../../lib/utils";
 
 
-function BoxNodeDialog({ open, setOpen, node }: NodeDialogProps) {
+function ProductionControlNodeDialog({ open, setOpen, node }: NodeDialogProps) {
     const reactFlowInstance = useReactFlow();
 
     const handleSubmit = (result: any) => {
@@ -41,4 +41,4 @@ function BoxNodeDialog({ open, setOpen, node }: NodeDialogProps) {
 	);
 }
 
-export default BoxNodeDialog;
+export default ProductionControlNodeDialog;
