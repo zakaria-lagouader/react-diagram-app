@@ -20,7 +20,6 @@ function BoxNodeDialog({ open, setOpen, node }: NodeDialogProps) {
 
 			return n;
 		}));
-		setOpen(false);
     }
 
 	return (

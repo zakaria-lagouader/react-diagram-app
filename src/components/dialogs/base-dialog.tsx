@@ -30,6 +30,7 @@ function BaseDialog({ open, setOpen, onSubmit, children }: BaseDialogProps) {
         const formData = new FormData(e.target as HTMLFormElement);
         const result = Object.fromEntries(formData.entries());
         onSubmit(result)
+		setOpen(false);
     }, [onSubmit]);
 
 	return (

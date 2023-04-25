@@ -1,4 +1,4 @@
-import React, { createContext, memo, useMemo, useState } from "react";
+import React, { createContext, useState } from "react";
 import { Node } from "reactflow";
 import BoxNodeDialog from "../dialogs/box-node-dialog";
 import EntityNodeDialog from "../dialogs/entity-node-dialog";
@@ -19,7 +19,7 @@ const Dialogs = {
 	box: BoxNodeDialog
 }
 
-const Empty = (props: any) => <></>
+const Empty = (_: any) => <></>
 
 function NodeDialogProvider({ children }: NodeDialogProviderProps) {
 	const [open, setOpen] = useState(false);
