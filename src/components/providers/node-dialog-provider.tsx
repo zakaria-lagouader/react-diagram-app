@@ -1,7 +1,7 @@
 import React, { createContext, useState } from "react";
 import { Node } from "reactflow";
 import BoxNodeDialog from "../dialogs/box-node-dialog";
-import EntityNodeDialog from "../dialogs/entity-node-dialog";
+import ProcessNodeDialog from "../dialogs/process-node-dialog";
 
 type NodeDialogProviderProps = {
 	children: React.ReactNode;
@@ -15,7 +15,7 @@ type NodeDialogContextProps = {
 export const NodeDialogContext = createContext<NodeDialogContextProps>({} as NodeDialogContextProps);
 
 const Dialogs = {
-	entity: EntityNodeDialog,
+	process: ProcessNodeDialog,
 	box: BoxNodeDialog
 }
 

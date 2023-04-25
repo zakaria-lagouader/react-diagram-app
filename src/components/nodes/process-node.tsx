@@ -8,14 +8,14 @@ export type NodeData = {
 	attributes: string[];
 };
 
-function EntityNode({ data, id }: NodeProps<NodeData>) {
+function ProcessNode({ data, id }: NodeProps<NodeData>) {
 	const reactFlowInstance = useReactFlow();
 	const node = reactFlowInstance.getNode(id)!;
 
 	return (
 		<BaseNode node={node}>
-			<div className="bg-green-400 border-2 border-black w-[10rem]">
-				<div className="text-center text-sm font-semibold py-1 p-2 border-b-2 border-b-black">
+			<div className="bg-white border border-black w-[10rem]">
+				<div className="text-center text-sm font-semibold py-1 p-2 border-b border-b-black bg-[#e9eff7]">
 					{data.title}
 				</div>
 				<ul className="block py-1">
@@ -33,4 +33,4 @@ function EntityNode({ data, id }: NodeProps<NodeData>) {
 	);
 }
 
-export default memo(EntityNode);
+export default memo(ProcessNode);

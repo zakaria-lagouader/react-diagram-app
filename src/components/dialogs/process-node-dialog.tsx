@@ -6,7 +6,7 @@ import { isEmpty } from "../../lib/utils";
 import { Textarea } from "../ui/textarea";
 
 
-function EntityNodeDialog({ open, setOpen, node }: NodeDialogProps) {
+function ProcessNodeDialog({ open, setOpen, node }: NodeDialogProps) {
     const reactFlowInstance = useReactFlow();
 
     const handleSubmit = (result: any) => {
@@ -54,4 +54,4 @@ function EntityNodeDialog({ open, setOpen, node }: NodeDialogProps) {
 	);
 }
 
-export default EntityNodeDialog;
+export default ProcessNodeDialog;

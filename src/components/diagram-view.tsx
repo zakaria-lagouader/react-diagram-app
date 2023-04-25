@@ -22,7 +22,7 @@ import type {
 } from "reactflow";
 
 import "reactflow/dist/style.css";
-import EntityNode from "./nodes/entity-node";
+import ProcessNode from "./nodes/process-node";
 import BoxNode from "./nodes/box-node";
 
 const defaultEdgeOptions: DefaultEdgeOptions = {
@@ -31,16 +31,16 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 };
 
 const nodeTypes: NodeTypes = {
-	entity: EntityNode,
+	process: ProcessNode,
 	box: BoxNode,
 };
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
 const dataByType = {
-	entity: {
-		title: "Entity",
-		attributes: ["attr1: value 1", "attr2: value 2"],
+	process: {
+		title: "Process",
+		attributes: ["C/T = 300sec", "C/O = 60min"],
 	},
 	box: {
 		title: "Box Node",

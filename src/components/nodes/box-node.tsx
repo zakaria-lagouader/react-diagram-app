@@ -13,7 +13,7 @@ function BoxNode({ data, id }: NodeProps<NodeData>) {
 
 	return (
 		<BaseNode node={node}>
-			<div className="bg-blue-400 border-2 border-black w-[10rem]">
+			<div className="bg-blue-400 border border-black w-[10rem]">
 				<div className="text-center text-sm font-semibold p-2">
 					{data.title}
 				</div>
