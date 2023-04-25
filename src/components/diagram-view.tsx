@@ -24,6 +24,7 @@ import type {
 import "reactflow/dist/style.css";
 import ProcessNode from "./nodes/process-node";
 import BoxNode from "./nodes/box-node";
+import customerSupplierNode from "./nodes/customer-supplier-node";
 
 const defaultEdgeOptions: DefaultEdgeOptions = {
 	animated: true,
@@ -33,6 +34,7 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 const nodeTypes: NodeTypes = {
 	process: ProcessNode,
 	box: BoxNode,
+	"customer-supplier": customerSupplierNode
 };
 
 let id = 0;
@@ -44,6 +46,9 @@ const dataByType = {
 	},
 	box: {
 		title: "Box Node",
+	},
+	"customer-supplier": {
+		title: "customer/supplier",
 	},
 };
 const getNodeByType = (type: string, position: XYPosition): Node => ({

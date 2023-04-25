@@ -37,7 +37,7 @@ function Sidebar() {
 			<div className="w-full mt-8 grid grid-cols-2 gap-4">
 				<Component text="Process" color="bg-green-400" type="process" />
 				<Component text="Box" color="bg-blue-400" type="box" />
-				<Component text="Test" color="bg-red-400" type="test" />
+				<Component text="Customer/Supplier" color="bg-red-400" type="customer-supplier" />
 			</div>
 		</ScrollArea>
 	);
