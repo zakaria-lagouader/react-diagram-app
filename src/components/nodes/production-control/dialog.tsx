@@ -1,11 +1,11 @@
 import { useReactFlow } from "reactflow";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import BaseDialog, { NodeDialogProps } from "./base-dialog";
-import { isEmpty } from "../../lib/utils";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import BaseDialog, { NodeDialogProps } from "../base/dialog";
+import { isEmpty } from "../../../lib/utils";
 
 
-function CustomerSupplierNodeDialog({ open, setOpen, node }: NodeDialogProps) {
+function ProductionControlNodeDialog({ open, setOpen, node }: NodeDialogProps) {
     const reactFlowInstance = useReactFlow();
 
     const handleSubmit = (result: any) => {
@@ -41,4 +41,4 @@ function CustomerSupplierNodeDialog({ open, setOpen, node }: NodeDialogProps) {
 	);
 }
 
-export default CustomerSupplierNodeDialog;
+export default ProductionControlNodeDialog;

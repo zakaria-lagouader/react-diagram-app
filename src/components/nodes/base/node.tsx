@@ -4,9 +4,9 @@ import {
 	ContextMenuContent,
 	ContextMenuItem,
 	ContextMenuTrigger,
-} from "../ui/context-menu";
+} from "../../ui/context-menu";
 import { memo, useCallback, useContext } from "react";
-import { NodeDialogContext } from "../providers/node-dialog-provider";
+import { NodeDialogContext } from "../../providers/node-dialog-provider";
 
 type BaseNodeProps = {
 	node: Node;
@@ -17,7 +17,7 @@ type BaseNodeProps = {
 	left?: boolean;
 };
 
-function BaseNode({ children, node, top, left, right, bottom }: BaseNodeProps) {
+const BaseNode = memo(({ children, node, top, left, right, bottom }: BaseNodeProps) => {
 	const { openNodeDialog } = useContext(NodeDialogContext);
 	const reactFlowInstance = useReactFlow();
 
@@ -50,6 +50,6 @@ function BaseNode({ children, node, top, left, right, bottom }: BaseNodeProps) {
 			</ContextMenuTrigger>
 		</ContextMenu>
 	);
-}
+})
 
-export default memo(BaseNode);
+export default BaseNode;

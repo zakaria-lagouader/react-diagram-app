@@ -1,12 +1,11 @@
 import { useReactFlow } from "reactflow";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import BaseDialog, { NodeDialogProps } from "./base-dialog";
-import { isEmpty } from "../../lib/utils";
-import { Textarea } from "../ui/textarea";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import BaseDialog, { NodeDialogProps } from "../base/dialog";
+import { isEmpty } from "../../../lib/utils";
 
 
-function ProcessNodeDialog({ open, setOpen, node }: NodeDialogProps) {
+function InventoryNodeDialog({ open, setOpen, node }: NodeDialogProps) {
     const reactFlowInstance = useReactFlow();
 
     const handleSubmit = (result: any) => {
@@ -16,7 +15,6 @@ function ProcessNodeDialog({ open, setOpen, node }: NodeDialogProps) {
 			if(node.id === n.id) {
 				n.data = {
 					title: result.title,
-                    attributes: result.attributes.split("\n")
 				}
 			}
 
@@ -38,20 +36,9 @@ function ProcessNodeDialog({ open, setOpen, node }: NodeDialogProps) {
 						className="col-span-3"
 					/>
 				</div>
-                <div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="attributes" className="text-right">
-							Attributes
-						</Label>
-						<Textarea
-							id="attributes"
-							name="attributes"
-							defaultValue={node?.data.attributes.join("\n")}
-							className="col-span-3"
-						/>
-					</div>
 			</div>
 		</BaseDialog>
 	);
 }
 
-export default ProcessNodeDialog;
+export default InventoryNodeDialog;

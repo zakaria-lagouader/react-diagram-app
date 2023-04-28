@@ -1,13 +1,13 @@
 import { useReactFlow } from "reactflow";
 import type { NodeProps } from "reactflow";
-import BaseNode from "./base-node";
+import BaseNode from "../base/node";
 import { memo } from "react";
 
 export type NodeData = {
 	title: string;
 };
 
-function ProductionControlNode({ data, id }: NodeProps<NodeData>) {
+const ProductionControlNode = memo(({ data, id }: NodeProps<NodeData>) => {
 	const reactFlowInstance = useReactFlow();
 	const node = reactFlowInstance.getNode(id)!;
 
@@ -23,6 +23,6 @@ function ProductionControlNode({ data, id }: NodeProps<NodeData>) {
 			</div>
 		</BaseNode>
 	);
-}
+})
 
-export default memo(ProductionControlNode);
+export default ProductionControlNode;

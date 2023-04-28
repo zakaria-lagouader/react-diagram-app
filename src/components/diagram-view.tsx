@@ -2,7 +2,6 @@ import { useRef, useState, useCallback } from "react";
 import ReactFlow, {
 	Background,
 	Controls,
-	MarkerType,
 	MiniMap,
 	addEdge,
 	BackgroundVariant,
@@ -11,63 +10,12 @@ import ReactFlow, {
 	useEdgesState,
 } from "reactflow";
 
-import type {
-	Node,
-	Edge,
-	OnConnect,
-	DefaultEdgeOptions,
-	NodeTypes,
-	ReactFlowInstance,
-	XYPosition,
-} from "reactflow";
+import type { Node, Edge, OnConnect, ReactFlowInstance } from "reactflow";
 
 import "reactflow/dist/style.css";
-import ProcessNode from "./nodes/process-node";
-import ProductionControlNode from "./nodes/production-control-node";
-import CustomerSupplierNode from "./nodes/customer-supplier-node";
-import ExternalShipmentNode from "./nodes/external-shipment-node";
-import InventoryNode from "./nodes/inventory-node";
 import DownloadButton from "./download-button";
-
-const defaultEdgeOptions: DefaultEdgeOptions = {
-	animated: true,
-	markerEnd: { type: MarkerType.Arrow },
-};
-
-const nodeTypes: NodeTypes = {
-	process: ProcessNode,
-	"production-control": ProductionControlNode,
-	"customer-supplier": CustomerSupplierNode,
-	"external-shipment": ExternalShipmentNode,
-	"inventory": InventoryNode,
-};
-
-let id = 0;
-const getId = () => `dndnode_${id++}`;
-const dataByType = {
-	process: {
-		title: "Process",
-		attributes: ["C/T = 300sec", "C/O = 60min"],
-	},
-	"production-control": {
-		title: "Production Control",
-	},
-	"customer-supplier": {
-		title: "customer/supplier",
-	},
-	"external-shipment": {
-		title: "Weakly",
-	},
-	"inventory": {
-		title: "733",
-	},
-};
-const getNodeByType = (type: string, position: XYPosition): Node => ({
-	id: getId(),
-	type,
-	position,
-	data: dataByType[type as keyof typeof dataByType],
-});
+import { createNode, nodeTypes } from "../nodes-config";
+import { defaultEdgeOptions } from "../react-flow-config";
 
 function DiagramView() {
 	const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>([]);
@@ -105,7 +53,7 @@ function DiagramView() {
 				y: event.clientY - reactFlowBounds.top,
 			});
 
-			const newNode = getNodeByType(type, position)
+			const newNode = createNode({ type, position });
 
 			setNodes((nds) => nds.concat(newNode));
 		},
@@ -113,7 +61,7 @@ function DiagramView() {
 	);
 
 	return (
-		<div className="flex-1 h-full relative" ref={reactFlowWrapper} >
+		<div className="flex-1 h-full relative" ref={reactFlowWrapper}>
 			<DownloadButton />
 			<ReactFlow
 				nodes={nodes}

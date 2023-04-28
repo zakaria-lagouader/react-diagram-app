@@ -1,15 +1,15 @@
 import { useReactFlow } from "reactflow";
 import type { NodeProps } from "reactflow";
-import BaseNode from "./base-node";
+import BaseNode from "../base/node";
 import { memo } from "react";
-import CustomerSupplierNodeIcon from "../../icons/customer-supplier.svg"
+import CustomerSupplierNodeIcon from "../../../icons/customer-supplier.svg"
 
 export type NodeData = {
 	title: string;
-    type: "customer" | "supplier"
+    type?: "customer" | "supplier"
 };
 
-function CustomerSupplierNode({ data, id }: NodeProps<NodeData>) {
+const CustomerSupplierNode = memo(({ data, id }: NodeProps<NodeData>) => {
 	const reactFlowInstance = useReactFlow();
 	const node = reactFlowInstance.getNode(id)!;
 
@@ -23,6 +23,6 @@ function CustomerSupplierNode({ data, id }: NodeProps<NodeData>) {
 			</div>
 		</BaseNode>
 	);
-}
+})
 
-export default memo(CustomerSupplierNode);
+export default CustomerSupplierNode;

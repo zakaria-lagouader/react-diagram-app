@@ -1,18 +1,14 @@
-import { ScrollArea } from "./ui/scroll-area";
-import InventoryImage from "../icons/inventory.svg"
-import CustomerSupplierImage from "../icons/customer-supplier.svg"
-import ExternalShipmentImage from "../icons/external-shipment.svg"
-import ProcessImage from "../icons/process.svg"
-import ProductionControlImage from "../icons/production-control.svg"
 import { useCallback } from "react";
+import { ScrollArea } from "./ui/scroll-area";
+import { nodes } from "../nodes-config";
 
 type ComponentProp = {
-	text: string;
+	name: string;
 	type: string;
 	image: string;
 };
 
-function Component({ text, image, type }: ComponentProp) {
+function DroppableItem({ name, image, type }: ComponentProp) {
 	
 	const onDragStart: React.DragEventHandler<HTMLDivElement> = useCallback((event) => {
 		event.dataTransfer.setData("application/reactflow", type);
@@ -26,7 +22,7 @@ function Component({ text, image, type }: ComponentProp) {
 			draggable
 		>
 			<img src={image} className="block w-[5rem] h-[5rem] object-contain" />
-			<p className="mt-2 font-semibold">{text}</p>
+			<p className="mt-2 font-semibold">{name}</p>
 		</div>
 	);
 }
@@ -39,11 +35,9 @@ function Sidebar() {
 			</h2>
 
 			<div className="w-full mt-8 grid grid-cols-2 gap-4">
-				<Component text="Process" image={ProcessImage}  type="process" />
-				<Component text="Production Control" image={ProductionControlImage}  type="production-control" />
-				<Component text="Customer/Supplier" image={CustomerSupplierImage}  type="customer-supplier" />
-				<Component text="External Shipment" image={ExternalShipmentImage}  type="external-shipment" />
-				<Component text="Inventory" image={InventoryImage} type="inventory" />
+				{ nodes.map(node => (
+					<DroppableItem key={node.type} name={node.name} image={node.image}  type={node.type} />
+				))}
 			</div>
 		</ScrollArea>
 	);

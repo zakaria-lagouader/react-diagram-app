@@ -1,6 +1,6 @@
 import { useReactFlow } from "reactflow";
 import type { NodeProps } from "reactflow";
-import BaseNode from "./base-node";
+import BaseNode from "../base/node";
 import { memo } from "react";
 
 export type NodeData = {
@@ -8,7 +8,7 @@ export type NodeData = {
 	attributes: string[];
 };
 
-function ProcessNode({ data, id }: NodeProps<NodeData>) {
+const  ProcessNode = memo(({ data, id }: NodeProps<NodeData>) => {
 	const reactFlowInstance = useReactFlow();
 	const node = reactFlowInstance.getNode(id)!;
 
@@ -31,6 +31,6 @@ function ProcessNode({ data, id }: NodeProps<NodeData>) {
 			</div>
 		</BaseNode>
 	);
-}
+})
 
-export default memo(ProcessNode);
+export default ProcessNode;

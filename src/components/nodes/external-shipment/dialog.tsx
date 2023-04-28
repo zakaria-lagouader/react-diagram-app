@@ -1,8 +1,8 @@
 import { useReactFlow } from "reactflow";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import BaseDialog, { NodeDialogProps } from "./base-dialog";
-import { isEmpty } from "../../lib/utils";
+import { Input } from "../../ui/input";
+import { Label } from "../../ui/label";
+import BaseDialog, { NodeDialogProps } from "../base/dialog";
+import { isEmpty } from "../../../lib/utils";
 
 
 function ExternalShipmentNodeDialog({ open, setOpen, node }: NodeDialogProps) {
